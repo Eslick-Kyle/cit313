@@ -224,7 +224,7 @@ function write($arr){
                     isset($_POST["uses"])) {
                     echo "<p class=\"text-center\">Thank you for sending your computer's information</p>";
                 }
-                if ($_SESSION["submit"]) {
+                else if ($_SESSION["submit"]) {
                     echo "<p class=\"text-center\">You have already submitted a form.</p>";
                 }
             ?>

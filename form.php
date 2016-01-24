@@ -1,12 +1,7 @@
 <?php
 session_start();
-<<<<<<< HEAD
 if (isset($_SESSION["submit"])) {
     header('Location: response.php');
-=======
-if ($_SESSION["submit"]) {
-    header('Location: responce.php');
->>>>>>> 719d2efed89eb3aa775fa71ffc216cd9bf7c43f5
 }
 ?>
 <!DOCTYPE html>

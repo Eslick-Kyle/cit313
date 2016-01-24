@@ -1,7 +1,12 @@
 <?php
 session_start();
+<<<<<<< HEAD
 if (isset($_SESSION["submit"])) {
     header('Location: response.php');
+=======
+if ($_SESSION["submit"]) {
+    header('Location: responce.php');
+>>>>>>> 719d2efed89eb3aa775fa71ffc216cd9bf7c43f5
 }
 ?>
 <!DOCTYPE html>
@@ -63,7 +68,11 @@ if (isset($_SESSION["submit"])) {
         <div class="container tinted round">
             <h1>Computer Information</h1>
 
+<<<<<<< HEAD
             <form action="response.php" method="post" id="myForm" name="myForm">
+=======
+            <form action="responce.php" method="post" id="myForm" name="myForm">
+>>>>>>> 719d2efed89eb3aa775fa71ffc216cd9bf7c43f5
 
                 <label>Processor brand:</label>
                 <div class="radio">
@@ -121,7 +130,11 @@ if (isset($_SESSION["submit"])) {
 
                 <div class="form-group" id="submit">
                     <button type="submit" class="btn btn-default" >Submit</button>
+<<<<<<< HEAD
                     <a href="response.php" class="btn btn-default" >View Results</a>
+=======
+                    <a href="responce.php" class="btn btn-default" >View Results</a>
+>>>>>>> 719d2efed89eb3aa775fa71ffc216cd9bf7c43f5
                 </div>
             </form>
         </div>

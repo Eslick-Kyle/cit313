@@ -1,3 +1,4 @@
+<?php include 'db.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,11 +8,6 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/color.css">
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
-    <script type="text/javascript">
-    function hello () {
-        alert("That's me!");
-    }
-    </script>
 </head>
 
 <body>
@@ -21,8 +17,6 @@
         <div class="container tinted round">
            <?php 
             try {
-                include 'db.php';
-
                 $stmt = $conn->prepare("SELECT * FROM item");
                 $stmt->execute();
                 $items = $stmt->fetchAll();

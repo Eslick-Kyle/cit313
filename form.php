@@ -1,4 +1,5 @@
 <?php
+include 'db.php';
 session_start();
 if (isset($_SESSION["submit"])) {
     header('Location: response.php');

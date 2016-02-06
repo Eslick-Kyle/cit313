@@ -1,18 +1,16 @@
-                <?php
-                try {
-                include 'db.php';
-
-                $stmt = $conn->prepare("SELECT s.quantity FROM item i JOIN shoppingCart s ON s.itemid = i.id JOIN user u ON s.userid = u.id");
-                $stmt->execute();
-                $count = $stmt->fetchAll();
-                $quantity = 0;
-                foreach ($count as $c) {
-                    $quantity += $c['quantity'];
-                }
-            } catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
-            } 
-            ?>
+<?php
+try {
+    $stmt = $conn->prepare("SELECT s.quantity FROM item i JOIN shoppingCart s ON s.itemid = i.id JOIN user u ON s.userid = u.id");
+    $stmt->execute();
+    $count = $stmt->fetchAll();
+    $quantity = 0;
+    foreach ($count as $c) {
+        $quantity += $c['quantity'];
+    }
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+} 
+?>
     <div style="width: 100%; " class="container">
         <!-- Static navbar -->
         <nav class="navbar navbar-default">

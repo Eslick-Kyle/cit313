@@ -1,3 +1,4 @@
+<?php include 'db.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +22,6 @@
         <div class="container tinted round">
            <?php 
             try {
-                include 'db.php';
 
                 $stmt = $conn->prepare("SELECT u.id as uId, u.name as uName, s.quantity, i.id, i.name, i.price FROM item i JOIN shoppingCart s ON s.itemid = i.id JOIN user u ON s.userid = u.id");
                 $stmt->execute();

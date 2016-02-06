@@ -1,14 +1,13 @@
 <?php
+include 'db.php';
 if (isset($_GET['item'])){
     try {
-        include 'db.php';
-
         $stmt = $conn->prepare("SELECT * FROM item WHERE id = :id");
         $id = $_GET['item'];
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $item = $stmt->fetch();
-        if ($stmt->rowCount() == 0){
+        if ($stmt->rowCount() == 0) {
             header('Location: store.php');
         }
     } catch (PDOException $e) {

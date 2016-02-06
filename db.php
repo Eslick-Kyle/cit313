@@ -5,7 +5,7 @@ $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');
 $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');
 $dbName = 'php';
 
-if (DB_NAME != null)
+if ($dbHost != null)
 {
 	try {
 		$conn = new PDO("mysql:host=$dbHost:$dbPort;dbname=$dbName", $dbUser, $dbPassword);

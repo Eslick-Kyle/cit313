@@ -8,6 +8,7 @@ define('DB_NAME',getenv('OPENSHIFT_GEAR_NAME'));
 
 if (DB_NAME != null)
 {
+	echo 'DB NAME WAS FOUND! <br>';
 	$dsn = 'mysql:dbname='.DB_NAME.';host='.DB_HOST.';port='.DB_PORT;
 	try {
 		$conn = new PDO($dsn);

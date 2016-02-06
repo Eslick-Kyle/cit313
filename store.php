@@ -19,15 +19,23 @@
 
     <div class="container">
         <div class="container tinted round">
-            <div class="row">
-                <div class="col-sm-8">
-                    <h1>Kyle Eslick</h1>
-                    <p class="lead">Software Engineer in his last semester of college at Brigham Young University Idaho.</p>
-                </div>
-                <div class="col-sm-4">
-                    <img src="images/kyle.jpg" onclick="hello()">
-                </div>
-            </div>
+           <?php 
+            try {
+                include 'db.php';
+
+                $stmt = $conn->prepare("SELECT * FROM item");
+                $stmt->execute();
+                $items = $stmt->fetchAll();
+                $output = '<table class="table table-hover"><thead><tr><th>Name</th><th>price</th></tr></thead><tbody style="cursor:pointer;">';
+                foreach ($items as $item) {
+                    $output .= '<tr><td><a href="item.php?item=' . $item['id'] . '"></a>' . $item['name'] . '</td><td>' . $item['price'] . '</td></tr>';
+                }
+                $output .= '</tbody></table>';
+                echo $output;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+           ?>
         </div>
 
         <footer class="footer">
@@ -40,5 +48,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery.min.js"><\/script>')</script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+    $("tbody tr").click(function() {
+        window.location.href = $(this).find("a").attr("href");
+    });
+    </script>
 </body>
 </html>

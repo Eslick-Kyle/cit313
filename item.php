@@ -1,3 +1,23 @@
+<?php
+if (isset($_GET['item'])){
+    try {
+        include 'db.php';
+
+        $stmt = $conn->prepare("SELECT * FROM item WHERE id = :id");
+        $id = $_GET['item'];
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $item = $stmt->fetch();
+        if ($stmt->rowCount() == 0){
+            header('Location: store.php');
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+} else {
+    header('Location: store.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,11 +27,6 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/color.css">
     <link rel="stylesheet" type="text/css" href="css/navbar.css">
-    <script type="text/javascript">
-    function hello () {
-        alert("That's me!");
-    }
-    </script>
 </head>
 
 <body>
@@ -19,15 +34,21 @@
 
     <div class="container">
         <div class="container tinted round">
+           <?php 
+
+           ?>
             <div class="row">
-                <div class="col-sm-8">
-                    <h1>Kyle Eslick</h1>
-                    <p class="lead">Software Engineer in his last semester of college at Brigham Young University Idaho.</p>
-                </div>
                 <div class="col-sm-4">
-                    <img src="images/kyle.jpg" onclick="hello()">
+                    <img style="max-width: 350px;" src="<?php echo $item['picture']; ?>">
+                </div>
+                <div class="col-sm-8">
+                    
+                    <h1><?php echo $item['name']; ?></h1>
+                    <p class="lead">Price: $<?php echo $item['price']; ?> <button>Add to Cart</button></p>
+                    <p><?php echo $item['description']; ?></p>
                 </div>
             </div>
+
         </div>
 
         <footer class="footer">

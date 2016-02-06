@@ -1,6 +1,6 @@
 <?php
 try {
-    $stmt = $conn->prepare("SELECT s.quantity FROM item i JOIN shoppingCart s ON s.itemid = i.id JOIN user u ON s.userid = u.id");
+    $stmt = $conn->prepare("SELECT s.quantity FROM item i JOIN shoppingcart s ON s.itemid = i.id JOIN user u ON s.userid = u.id");
     $stmt->execute();
     $count = $stmt->fetchAll();
     $quantity = 0;

@@ -23,7 +23,7 @@
            <?php 
             try {
 
-                $stmt = $conn->prepare("SELECT u.id as uId, u.name as uName, s.quantity, i.id, i.name, i.price FROM item i JOIN shoppingCart s ON s.itemid = i.id JOIN user u ON s.userid = u.id");
+                $stmt = $conn->prepare("SELECT u.id as uId, u.name as uName, s.quantity, i.id, i.name, i.price FROM item i JOIN shoppingcart s ON s.itemid = i.id JOIN user u ON s.userid = u.id");
                 $stmt->execute();
                 $items = $stmt->fetchAll();
                 $output = "<h1>" . $items[0]['uName'] . "'s Shopping Cart</h1>";

@@ -1,6 +1,7 @@
 <?php
 try {
-    $stmt = $conn->prepare("SELECT s.quantity FROM item i JOIN shoppingcart s ON s.itemid = i.id JOIN user u ON s.userid = u.id");
+    $stmt = $conn->prepare("SELECT s.quantity FROM item i JOIN shoppingcart s ON s.itemid = i.id JOIN user u ON s.userid = u.id WHERE u.id = :id");
+    $stmt->bindParam(':id', $_SESSION["id"]);
     $stmt->execute();
     $count = $stmt->fetchAll();
     $quantity = 0;
@@ -42,8 +43,10 @@ try {
                             </ul>
                         </li>-->
                     </ul> 
+                    <?php if (isset($_SESSION['id'])): ?>
                     
                     <ul class="nav navbar-nav navbar-right">
+                        <li><a href="logout.php">logout?</a></li>
                         <li><a href="shoppingCart.php">Shopping Cart
                         <?php 
                         if ($quantity > 0)
@@ -53,6 +56,10 @@ try {
 
                         ?>
                         </a></li>
+                    <?php else: ?>
+                        <ul class="nav navbar-nav navbar-right">
+                        <li><a href="login.php">Login</a></li>
+                    <?php endif; ?>
                     <!--    <li><a href="../navbar-static-top/">Static top</a></li>
                         <li><a href="../navbar-fixed-top/">Fixed top</a></li> -->
                     </ul>

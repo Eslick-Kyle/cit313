@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include 'db.php';
 if (isset($_GET['item'])){
     try {
@@ -43,7 +45,7 @@ if (isset($_GET['item'])){
                 <div class="col-sm-8">
                     
                     <h1><?php echo $item['name']; ?></h1>
-                    <p class="lead">Price: $<?php echo $item['price']; ?> <button>Add to Cart</button></p>
+                    <p class="lead">Price: $<?php echo $item['price']; ?> <a href="shoppingCart.php?item=<?php echo $item['id']; ?>" class="btn btn-default">Add to Cart</a></p>
                     <p><?php echo $item['description']; ?></p>
                 </div>
             </div>

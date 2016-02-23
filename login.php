@@ -2,19 +2,38 @@
 session_start();
 
 include 'db.php'; 
-
+require 'password.php';
+$login = true;
 if (isset($_POST["email"]) && isset($_POST["pass"])) {
     try {
-        $stmt = $conn->prepare("SELECT id, name, email FROM user WHERE email = :email AND password = :password");
+        
+        $stmt = $conn->prepare("SELECT id, password FROM user WHERE email = :email");
         $stmt->bindParam(':email', $_POST["email"]);
-        $stmt->bindParam(':password', $_POST["pass"]);
         $stmt->execute();
-        $id = $stmt->fetch();
-        $_SESSION['id'] = $id["id"];
-        $_SESSION['name'] = $id["name"];
-        $_SESSION['email'] = $id["email"];
-        $_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
-        header("Location:", $_SESSION['referer']);
+        $pass = $stmt->fetch();
+
+        $stmt = $conn->prepare("UPDATE user SET password = :password WHERE id = :id");
+        $passwordHash = password_hash($pass['password'], PASSWORD_DEFAULT);
+        $stmt->bindParam(':id', $pass['id']);
+        $stmt->bindParam(':password', $passwordHash);
+        $stmt->execute();
+
+        if (password_verify($_POST['pass'], $pass['password'])) {
+            $stmt = $conn->prepare("SELECT id, name, email FROM user WHERE email = :email AND password = :password");
+
+            $stmt->bindParam(':email', $_POST["email"]);
+            $stmt->bindParam(':password', $_POST["pass"]);
+            $stmt->execute();
+            $id = $stmt->fetch();
+            $_SESSION['id'] = $id["id"];
+            $_SESSION['name'] = $id["name"];
+            $_SESSION['email'] = $id["email"];
+            $_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
+            header("Location:", $_SESSION['referer']);
+            $login = true;
+        } else {
+            $login = false;
+        }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -38,6 +57,11 @@ if (isset($_POST["email"]) && isset($_POST["pass"])) {
     <div class="container">
         <div class="container tinted round">
             <form action="" method="post">
+            <?php
+            if (!$login) {
+                echo '<h3>Incorrect password or email!</h3>';
+            }
+            ?>
             <fieldset class="form-group">
                 <label for="email">Email:</label>
                 <input class="form-control" type="text" name="email" id="email"></input>

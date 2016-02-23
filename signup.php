@@ -2,14 +2,15 @@
 session_start();
 
 include 'db.php'; 
-
+require 'password.php';
 if (isset($_POST["email"]) && isset($_POST["pass"]) && isset($_POST["name"])) {
     try {
         $stmt = $conn->prepare("INSERT INTO user (name, email, password)
         VALUES (:name, :email, :password)");
         $stmt->bindParam(':name', $_POST["name"]);
         $stmt->bindParam(':email', $_POST["email"]);
-        $stmt->bindParam(':password', $_POST["pass"]);
+        $passwordHash = password_hash($_POST["pass"], PASSWORD_DEFAULT);
+        $stmt->bindParam(':password', $passwordHash);
         $stmt->execute();
         $_SESSION['id'] = $conn->lastInsertId();
         $_SESSION['name'] = $_POST["name"];

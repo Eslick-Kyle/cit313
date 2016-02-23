@@ -4,6 +4,7 @@ include 'db.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="text/javascript" src="js/sortable.js"></script>
     <meta charset="utf-8">
     <title>Kyle Eslick</title>
 
@@ -22,7 +23,7 @@ include 'db.php'; ?>
                 $stmt = $conn->prepare("SELECT * FROM item");
                 $stmt->execute();
                 $items = $stmt->fetchAll();
-                $output = '<table class="table table-hover"><thead><tr><th>Name</th><th>price</th></tr></thead><tbody style="cursor:pointer;">';
+                $output = '<table class="table table-hover sortable" id="table"><thead><tr><th>Name</th><th>price</th></tr></thead><tbody style="cursor:pointer;">';
                 foreach ($items as $item) {
                     $output .= '<tr><td><a href="item.php?item=' . $item['id'] . '"></a>' . $item['name'] . '</td><td>' . $item['price'] . '</td></tr>';
                 }

@@ -12,27 +12,20 @@ if (isset($_POST["email"]) && isset($_POST["pass"])) {
         $stmt->execute();
         $pass = $stmt->fetch();
 
-        $stmt = $conn->prepare("UPDATE user SET password = :password WHERE id = :id");
-        $passwordHash = password_hash($pass['password'], PASSWORD_DEFAULT);
-        $stmt->bindParam(':id', $pass['id']);
-        $stmt->bindParam(':password', $passwordHash);
-        $stmt->execute();
-
         if (password_verify($_POST['pass'], $pass['password'])) {
-            $stmt = $conn->prepare("SELECT id, name, email FROM user WHERE email = :email AND password = :password");
-
+            $stmt = $conn->prepare("SELECT id, name, email FROM user WHERE email = :email");
             $stmt->bindParam(':email', $_POST["email"]);
-            $stmt->bindParam(':password', $_POST["pass"]);
             $stmt->execute();
             $id = $stmt->fetch();
             $_SESSION['id'] = $id["id"];
             $_SESSION['name'] = $id["name"];
             $_SESSION['email'] = $id["email"];
             $_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
-            header("Location:", $_SESSION['referer']);
+            header("Location:store.php");
             $login = true;
         } else {
             $login = false;
+            echo '<h1>fail</h1>';
         }
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
